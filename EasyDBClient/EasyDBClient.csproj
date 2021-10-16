@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>Science21</Authors>
+    <Description>Simple connector for EasyDB</Description>
+    <Version>2.0.21</Version>
+    <PackageId>EasyDBConnector</PackageId>
+  </PropertyGroup>
+
+</Project>
