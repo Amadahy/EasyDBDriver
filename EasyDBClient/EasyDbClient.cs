@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using EasyDBConnector.Interface;
 
-namespace EasyDBConnector
+namespace EasyDBDriver
 {
     public class EasyDbClient<T> : IEasyDbClient<T> where T : EasyDbElement
     {

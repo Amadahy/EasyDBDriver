@@ -5,7 +5,7 @@ using NUnit.Framework;
 using EasyDBConnector.Model;
 using EasyDBConnector.Tests.Model;
 
-namespace EasyDBConnector.Tests
+namespace EasyDBDriver.Tests
 {
     public class EasyDbTests
     {

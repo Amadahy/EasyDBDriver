@@ -1,6 +1,6 @@
 ﻿using EasyDBConnector.Interface;
 
-namespace EasyDBConnector
+namespace EasyDBDriver
 {
     public class EasyDbFactory
     {
