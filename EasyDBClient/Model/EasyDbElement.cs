@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasyDBConnector.Interface
+namespace EasyDBDriver.Model
 {
     public class EasyDbElement
     {

@@ -1,4 +1,5 @@
-﻿using EasyDBConnector.Interface;
+﻿using EasyDBDriver.Interface;
+using EasyDBDriver.Model;
 
 namespace EasyDBDriver
 {

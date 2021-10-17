@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using EasyDBDriver.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EasyDBConnector.Interface
+namespace EasyDBDriver.Interface
 {
     public interface IEasyDbClient<T> where T : EasyDbElement
     {
@@ -9,7 +10,7 @@ namespace EasyDBConnector.Interface
         /// Return whole collection based on query
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<T>> GetCollectionAsync(string query);
+        Task<IEnumerable<T>> GetCollectionAsync(IOperator op);
 
         /// <summary>
         /// Return whole collection

@@ -1,10 +1,7 @@
-﻿using System;
+﻿using EasyDBDriver.Model;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using EasyDBConnector.Interface;
-using EasyDBConnector.Model;
 
-namespace EasyDBConnector.Tests.Model
+namespace EasyDBDriver.Tests.Model
 {
     public class TestEntity:EasyDbElement
     {

@@ -5,7 +5,8 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using EasyDBConnector.Interface;
+using EasyDBDriver.Interface;
+using EasyDBDriver.Model;
 
 namespace EasyDBDriver
 {
@@ -22,14 +23,14 @@ namespace EasyDBDriver
             _httpClient = new HttpClient();
         }
 
-        public async Task<IEnumerable<T>> GetCollectionAsync(string query)
+        public async Task<IEnumerable<T>> GetCollectionAsync(IOperator op )
         {
-            if (string.IsNullOrEmpty(query))
+            if (string.IsNullOrEmpty(op.ToString()))
             {
                 return await GetCollectionAsync();
             }
 
-            var response = await DoRequestAsync(HttpMethod.Get, $"{_url}?query={(query)}");
+            var response = await DoRequestAsync(HttpMethod.Get, $"{_url}?query={(op.Render())}");
             return await DeserializeAsync<IList<T>>(await response.Content.ReadAsStreamAsync());
         }
 

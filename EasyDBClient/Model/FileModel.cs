@@ -1,4 +1,4 @@
-﻿namespace EasyDBConnector.Model
+﻿namespace EasyDBDriver.Model
 {
     public class FileModel
     {

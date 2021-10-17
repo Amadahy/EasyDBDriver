@@ -2,8 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using EasyDBConnector.Model;
-using EasyDBConnector.Tests.Model;
+using EasyDBDriver.Model;
+using EasyDBDriver.Tests.Model;
+using EasyDBDriver.Model.Query;
+using System;
+using System.Text.Json;
 
 namespace EasyDBDriver.Tests
 {
@@ -28,13 +31,18 @@ namespace EasyDBDriver.Tests
             {
                 await connector.DeleteAsync(e);
             }
+        }
 
+        public async Task CleanUpAllCollection()
+        {
+            var connector = _factory.GetConnector<TestEntity>(_collection);
             var loadedEntities = await connector.GetCollectionAsync();
             foreach (var e in loadedEntities)
             {
                 await connector.DeleteAsync(e);
             }
         }
+
 
         [Test(Description = "Add item")]
         public async Task AddTestAsync()
@@ -109,9 +117,9 @@ namespace EasyDBDriver.Tests
 
             foreach (var entity in list)
             {
-                var loaded = loadedEntities.Select(e => entity.Id == e.Id).ToArray();
-                Assert.AreNotEqual(1, loaded.Count(), "Database has more entities with same id");
-                Assert.AreNotEqual(entity, loaded.First());
+                var loaded = loadedEntities.Where(e => entity.Id == e.Id).ToArray();
+                Assert.AreEqual(1, loaded.Count(), "Database has more entities with same id");
+                Assert.AreEqual(JsonSerializer.Serialize(entity), JsonSerializer.Serialize(loaded.First()));
             }
         }
 
@@ -121,22 +129,27 @@ namespace EasyDBDriver.Tests
             var connector = _factory.GetConnector<TestEntity>(_collection);
             var list = new List<TestEntity>();
 
+            var key = $"QueryTest{Guid.NewGuid()}";
+
             for (int i = 0; i < 21; i++)
             {
-                var e = new TestEntity() { DoubleItem = i * 2.1, IntItem = i, StringItem = "QueryTest", ListStringItem = new List<string>() { "21", "TwentyOne", i.ToString() } };
+                var e = new TestEntity() { DoubleItem = i * 2.1, IntItem = i, StringItem = key, ListStringItem = new List<string>() { "21", "TwentyOne", i.ToString() } };
                 var newE = await connector.AddAsync(e);
                 _createdElements.Add(newE.Id);
                 list.Add(newE);
             }
 
-            // "{$and:[{StringItem:{$eq:QueryTest}},{IntItem:{$gt:12}}]}"
-            var loadedEntities = await connector.GetCollectionAsync("{\"$and\":[{\"StringItem\":{\"$eq\":\"QueryTest\"}},{\"IntItem\":{\"$gt\":12}}]}");
+            var query = FilterExtension.And(new[]{
+                Filter<TestEntity>.Field(e => e.StringItem).Equal(key),
+                Filter<TestEntity>.Field(e => e.IntItem).Greater(12)
+                });
+            var loadedEntities = await connector.GetCollectionAsync(query);
 
             foreach (var entity in list.FindAll(e => e.IntItem > 12))
             {
-                var loaded = loadedEntities.Select(e => entity.Id == e.Id).ToArray();
-                Assert.AreNotEqual(1, loaded.Count(), "Database has more entities with same id");
-                Assert.AreNotEqual(entity, loaded.First());
+                var loaded = loadedEntities.Where(e => entity.Id == e.Id).ToArray();
+                Assert.AreEqual(1, loaded.Count(), "Database has more entities with same id");
+                Assert.AreEqual(JsonSerializer.Serialize(entity), JsonSerializer.Serialize(loaded.First()));
             }
         }
 

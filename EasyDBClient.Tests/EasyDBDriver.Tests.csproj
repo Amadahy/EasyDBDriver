@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EasyDBClient\EasyDBClient.csproj" />
+    <ProjectReference Include="..\EasyDBClient\EasyDBDriver.csproj" />
   </ItemGroup>
 
 </Project>
