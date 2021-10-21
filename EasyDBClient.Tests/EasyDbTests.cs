@@ -168,7 +168,14 @@ namespace EasyDBDriver.Tests
             var newE = await connector.AddAsync(e);
             Assert.IsNotNull(newE.Id, "Object has not Id");
             _createdElements.Add(newE.Id);
+        }
 
+        [Test(Description = "QueryWithJsonPropertyName")]
+        public void TestQueryWithJsonPropertyName()
+        {
+            var query = Filter<TestEntity>.Field(e => e.Id).Equal("TestId");
+            var stringQuery = query.Render();
+            Assert.IsTrue(stringQuery.Contains("_id"),"Query does not contais correct property name");
         }
     }
 }
