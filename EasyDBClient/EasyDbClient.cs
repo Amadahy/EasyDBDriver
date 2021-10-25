@@ -12,13 +12,18 @@ namespace EasyDBDriver
 {
     public class EasyDbClient<T> : IEasyDbClient<T> where T : EasyDbElement
     {
-        private readonly string _url;
+
         private readonly string _token;
         private readonly HttpClient _httpClient;
+        private readonly string _urlToServer;
+        private readonly string _collection;
+
+        private string Url { get { return $"{_urlToServer}/api/{_collection}"; } }
 
         public EasyDbClient(string urlToServer, string token, string collection)
         {
-            _url = $"{urlToServer}/api/{collection}";
+            _urlToServer = urlToServer;
+            _collection = collection; 
             _token = token;
             _httpClient = new HttpClient();
         }
@@ -30,13 +35,13 @@ namespace EasyDBDriver
                 return await GetCollectionAsync();
             }
 
-            var response = await DoRequestAsync(HttpMethod.Get, $"{_url}?query={(op.Render())}");
+            var response = await DoRequestAsync(HttpMethod.Get, $"{Url}?query={(op.Render())}");
             return await DeserializeAsync<IList<T>>(await response.Content.ReadAsStreamAsync());
         }
 
         public async Task<IEnumerable<T>> GetCollectionAsync()
         {
-            var response = await DoRequestAsync(HttpMethod.Get, _url);
+            var response = await DoRequestAsync(HttpMethod.Get, Url);
             var r = await response.Content.ReadAsStringAsync();
             return await DeserializeAsync<IList<T>>(await response.Content.ReadAsStreamAsync());
         }
@@ -49,7 +54,7 @@ namespace EasyDBDriver
 
         public async Task<string> AddAsync(T element)
         {
-            var response = await DoRequestAsync(HttpMethod.Post, _url);
+            var response = await DoRequestAsync(HttpMethod.Post, Url);
 
             element.Id = (await response.Content.ReadAsStringAsync()).Replace("\"", "");
 
@@ -80,7 +85,7 @@ namespace EasyDBDriver
 
         public async Task<byte[]> GetFileAsync(string url)
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, $"{_url}/{url}");
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{_urlToServer}/{url}");
 
             if (!string.IsNullOrEmpty(_token))
             {
@@ -88,6 +93,12 @@ namespace EasyDBDriver
             }
 
             var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException($"HttpMethod.Get {_urlToServer}/{url} {response.ToString()}");
+            }
+
             return await response.Content.ReadAsByteArrayAsync();
         }
 
@@ -108,7 +119,7 @@ namespace EasyDBDriver
                 throw new ArgumentNullException(nameof(id), "Id is null");
             }
 
-            return $"{_url}/{id}";
+            return $"{Url}/{id}";
         }
 
         private async Task<HttpResponseMessage> DoRequestAsync(HttpMethod method, string url, T entity)
