@@ -14,7 +14,7 @@ namespace EasyDBDriver
             _token = token;
         }
 
-        public IEasyDbClient<T> GetConnector<T>(string collection) where T : EasyDbElement
+        public IEasyDbClient<T> GetClient<T>(string collection) where T : EasyDbElement
         {
             return new EasyDbClient<T>(_url, _token, collection);
         }

@@ -47,7 +47,7 @@ namespace EasyDBDriver
             return await DeserializeAsync<T>(await response.Content.ReadAsStreamAsync());
         }
 
-        public async Task<T> AddAsync(T element)
+        public async Task<string> AddAsync(T element)
         {
             var response = await DoRequestAsync(HttpMethod.Post, _url);
 
@@ -55,7 +55,7 @@ namespace EasyDBDriver
 
             await UpdateAsync(element);
 
-            return element;
+            return element.Id;
         }
 
         public async Task UpdateAsync(T entity)

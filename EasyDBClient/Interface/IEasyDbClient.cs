@@ -29,7 +29,7 @@ namespace EasyDBDriver.Interface
         /// create row with random id string and return id
         /// </summary>
         /// <returns></returns>
-        Task<T> AddAsync(T element);
+        Task<string> AddAsync(T element);
 
         /// <summary>
         /// update row (shallow merge) from collection by id

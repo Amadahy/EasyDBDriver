@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EasyDBDriver.Model.Query
 {
-    public static class FilterExtension
+    public static class Filter
     {
         /// <summary>
         /// Joins query clauses with a logical AND returns all documents that match the conditions of both clauses.

@@ -9,6 +9,6 @@ namespace EasyDBDriver.Tests.Model
         public int IntItem { get; set; }
         public double DoubleItem { get; set; }
         public IList<string> ListStringItem { get; set; } 
-        public FileModel File { get; set; }
+        public FileModel File { get; set; } = new FileModel();
     }
 }
