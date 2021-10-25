@@ -23,7 +23,7 @@ namespace EasyDBDriver
             _httpClient = new HttpClient();
         }
 
-        public async Task<IEnumerable<T>> GetCollectionAsync(IOperator op )
+        public async Task<IEnumerable<T>> GetCollectionAsync(IOperator op)
         {
             if (string.IsNullOrEmpty(op.ToString()))
             {
@@ -37,7 +37,7 @@ namespace EasyDBDriver
         public async Task<IEnumerable<T>> GetCollectionAsync()
         {
             var response = await DoRequestAsync(HttpMethod.Get, _url);
-            var  r= await response.Content.ReadAsStringAsync();
+            var r = await response.Content.ReadAsStringAsync();
             return await DeserializeAsync<IList<T>>(await response.Content.ReadAsStreamAsync());
         }
 
@@ -71,6 +71,24 @@ namespace EasyDBDriver
         public async Task DeleteAsync(string id)
         {
             await DoRequestAsync(HttpMethod.Delete, GetUrlWithId(id));
+        }
+
+        public async Task<byte[]> GetFileAsync(FileModel fileModel)
+        {
+            return await GetFileAsync(fileModel.Url);
+        }
+
+        public async Task<byte[]> GetFileAsync(string url)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{_url}/{url}");
+
+            if (!string.IsNullOrEmpty(_token))
+            {
+                request.Headers.Add("Easy-DB-Token", _token);
+            }
+
+            var response = await _httpClient.SendAsync(request);
+            return await response.Content.ReadAsByteArrayAsync();
         }
 
         private string GetUrlWithId(T entity)

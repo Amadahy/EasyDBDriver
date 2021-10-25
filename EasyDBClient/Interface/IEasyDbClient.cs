@@ -47,5 +47,19 @@ namespace EasyDBDriver.Interface
         /// </summary>
         /// <param name="id"></param>
         Task DeleteAsync(string id);
+
+        /// <summary>
+        /// Return file content
+        /// </summary>
+        /// <param name="fileModel"></param>
+        /// <returns></returns>
+        Task<byte[]> GetFileAsync(FileModel fileModel);
+
+        /// <summary>
+        /// return filecontent
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        Task<byte[]> GetFileAsync(string url);
     }
 }
