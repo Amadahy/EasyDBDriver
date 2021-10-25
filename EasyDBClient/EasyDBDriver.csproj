@@ -6,7 +6,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Authors>Amadahy</Authors>
     <Description>Simple driver for EasyDB</Description>
-    <Version>2.0.22</Version>
+    <Version>3.0.21</Version>
     <PackageId>EasyDBDriver</PackageId>
     <PackageProjectUrl>https://github.com/Amadahy/EasyDBDriver</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Amadahy/EasyDBDriver</RepositoryUrl>
@@ -14,5 +14,4 @@
     <SignAssembly>false</SignAssembly>
     <Company />
   </PropertyGroup>
-
 </Project>
