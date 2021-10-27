@@ -1,7 +1,7 @@
 ﻿using EasyDBDriver.Interface;
 using System.Collections.Generic;
 
-namespace EasyDBDriver.Model.Query
+namespace EasyDBDriver.Model
 {
     public static class Filter
     {
@@ -10,7 +10,7 @@ namespace EasyDBDriver.Model.Query
         /// </summary>
         /// <param name="expressions"></param>
         /// <returns></returns>
-        public static AOperator And(IEnumerable<IOperator> expressions)
+        public static IOperator And(IEnumerable<IOperator> expressions)
         {
             return new LogicalOperator("$and", expressions);
         }
@@ -20,7 +20,7 @@ namespace EasyDBDriver.Model.Query
         /// </summary>
         /// <param name="expressions"></param>
         /// <returns></returns>
-        public static AOperator Or(IEnumerable<IOperator> expressions)
+        public static IOperator Or(IEnumerable<IOperator> expressions)
         {
             return new LogicalOperator("$or", expressions);
         }
@@ -30,7 +30,7 @@ namespace EasyDBDriver.Model.Query
         /// </summary>
         /// <param name="expressions"></param>
         /// <returns></returns>
-        public static AOperator Nor(IEnumerable<IOperator> expressions)
+        public static IOperator Nor(IEnumerable<IOperator> expressions)
         {
             return new LogicalOperator("$nor", expressions);
         }
@@ -40,7 +40,7 @@ namespace EasyDBDriver.Model.Query
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public static AOperator Not(this IOperator p)
+        public static IOperator Not(this IOperator p)
         {
             return new NotOperator(p);
         }
@@ -51,7 +51,7 @@ namespace EasyDBDriver.Model.Query
         /// <param name="p"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static AOperator Equal(this IOperator p, object value)
+        public static IOperator Equal(this IOperator p, object value)
         {
             return new ComparationOperator("$eq", value, p);
         }
@@ -62,7 +62,7 @@ namespace EasyDBDriver.Model.Query
         /// <param name="p"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static AOperator Greater(this IOperator p, object value)
+        public static IOperator Greater(this IOperator p, object value)
         {
             return new ComparationOperator("$gt", value, p);
         }
@@ -73,7 +73,7 @@ namespace EasyDBDriver.Model.Query
         /// <param name="p"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static AOperator GreaterOrEqual(this IOperator p, object value)
+        public static IOperator GreaterOrEqual(this IOperator p, object value)
         {
             return new ComparationOperator("$gte", value, p);
         }
@@ -84,7 +84,7 @@ namespace EasyDBDriver.Model.Query
         /// <param name="p"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static AOperator Less(this IOperator p, object value)
+        public static IOperator Less(this IOperator p, object value)
         {
             return new ComparationOperator("$lt", value, p);
         }
@@ -95,7 +95,7 @@ namespace EasyDBDriver.Model.Query
         /// <param name="p"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static AOperator LessOrEqual(this IOperator p, object value)
+        public static IOperator LessOrEqual(this IOperator p, object value)
         {
             return new ComparationOperator("$lte", value, p);
         }
@@ -106,7 +106,7 @@ namespace EasyDBDriver.Model.Query
         /// <param name="p"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static AOperator NotEqual(this IOperator p, object value)
+        public static IOperator NotEqual(this IOperator p, object value)
         {
             return new ComparationOperator("$ne", value, p);
         }

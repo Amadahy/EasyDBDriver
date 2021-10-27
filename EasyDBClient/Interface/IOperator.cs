@@ -2,6 +2,6 @@
 {
     public interface IOperator
     {
-        string Render(string s = null);
+        string Build(string s = null);
     }
 }

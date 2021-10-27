@@ -1,12 +1,12 @@
 ﻿using EasyDBDriver.Interface;
 using System.Text;
 
-namespace EasyDBDriver.Model.Query
+namespace EasyDBDriver.Model
 {
     /// <summary>
     /// Render { $not:  /child/ }
     /// </summary>
-    public class NotOperator : AOperator
+    internal class NotOperator : AOperator
     {
         private readonly string _op = "$not";
 
@@ -15,7 +15,7 @@ namespace EasyDBDriver.Model.Query
 
         }
 
-        public override string Render(string s = null)
+        public override string Build(string s = null)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -27,7 +27,7 @@ namespace EasyDBDriver.Model.Query
             sb.Append(s);
             sb.Append("}");
 
-            return base.Render(sb.ToString());
+            return base.Build(sb.ToString());
         }
     }
 }

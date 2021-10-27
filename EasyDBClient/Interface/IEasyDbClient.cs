@@ -10,7 +10,7 @@ namespace EasyDBDriver.Interface
         /// Return whole collection based on query
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<T>> GetCollectionAsync(IOperator op);
+        Task<IEnumerable<T>> GetCollectionAsync(IQuery query);
 
         /// <summary>
         /// Return whole collection

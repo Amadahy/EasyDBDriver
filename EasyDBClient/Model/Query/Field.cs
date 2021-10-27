@@ -1,13 +1,14 @@
-﻿using System;
+﻿using EasyDBDriver.Interface;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 
-namespace EasyDBDriver.Model.Query
+namespace EasyDBDriver.Model
 {
-    public static class Filter<T>
+    public static class Field<T>
     {
-        public static FieldDefiniton Field<TProp>(Expression<Func<T, TProp>> expression)
+        public static IFieldOperator Define<TProp>(Expression<Func<T, TProp>> expression)
         {
             var body = expression.Body as MemberExpression;
             if (body == null)

@@ -1,13 +1,13 @@
 ﻿using EasyDBDriver.Interface;
 using System.Text;
 
-namespace EasyDBDriver.Model.Query
+namespace EasyDBDriver.Model
 {
 
     /// <summary>
     ///  { price: ****** }
     /// </summary>
-    public class FieldDefiniton : AOperator
+    internal class FieldDefiniton : AOperator, IFieldOperator
     {
         private readonly string _name;
 
@@ -21,7 +21,7 @@ namespace EasyDBDriver.Model.Query
             _name = name;
         }
 
-        public override string Render(string s = null)
+        public override string Build(string s = null)
         {
             var sb = new StringBuilder();
             sb.Append("{");
@@ -31,7 +31,7 @@ namespace EasyDBDriver.Model.Query
             sb.Append(s);
             sb.Append("}");
 
-            return base.Render(sb.ToString());
+            return base.Build(sb.ToString());
         }
     }
 }

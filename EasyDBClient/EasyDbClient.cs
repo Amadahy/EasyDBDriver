@@ -23,19 +23,20 @@ namespace EasyDBDriver
         public EasyDbClient(string urlToServer, string token, string collection)
         {
             _urlToServer = urlToServer;
-            _collection = collection; 
+            _collection = collection;
             _token = token;
             _httpClient = new HttpClient();
         }
 
-        public async Task<IEnumerable<T>> GetCollectionAsync(IOperator op)
+        public async Task<IEnumerable<T>> GetCollectionAsync(IQuery query)
         {
-            if (string.IsNullOrEmpty(op.ToString()))
+            var queryString = query.BuildQuery();
+            if (string.IsNullOrEmpty(queryString))
             {
                 return await GetCollectionAsync();
             }
 
-            var response = await DoRequestAsync(HttpMethod.Get, $"{Url}?query={(op.Render())}");
+            var response = await DoRequestAsync(HttpMethod.Get, $"{Url}?{queryString}");
             return await DeserializeAsync<IList<T>>(await response.Content.ReadAsStreamAsync());
         }
 
@@ -156,9 +157,5 @@ namespace EasyDBDriver
             var result = await JsonSerializer.DeserializeAsync<C>(stream, options);
             return result;
         }
-
-
-
-
     }
 }

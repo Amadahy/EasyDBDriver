@@ -1,8 +1,8 @@
 ﻿using EasyDBDriver.Interface;
 
-namespace EasyDBDriver.Model.Query
+namespace EasyDBDriver.Model
 {
-    public abstract class AOperator : IOperator
+    internal abstract class AOperator : IOperator
     {
         protected IOperator _parent;
 
@@ -14,12 +14,12 @@ namespace EasyDBDriver.Model.Query
             _parent = parent;
         }
 
-        public virtual string Render(string s = null)
+        public virtual string Build(string s = null)
         {
             if (_parent == null)
                 return s;
 
-            return _parent.Render(s);
+            return _parent.Build(s);
         }
     }
 }

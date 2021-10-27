@@ -2,9 +2,9 @@
 using System;
 using System.Text;
 
-namespace EasyDBDriver.Model.Query
+namespace EasyDBDriver.Model
 {
-    public class ComparationOperator : AOperator
+    internal class ComparationOperator : AOperator
     {
         private readonly string _op;
         private readonly object _val;
@@ -21,7 +21,7 @@ namespace EasyDBDriver.Model.Query
             _val = value;
         }
 
-        public override string Render(string s)
+        public override string Build(string s)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -41,7 +41,7 @@ namespace EasyDBDriver.Model.Query
             }
             sb.Append("}");
 
-            return base.Render(sb.ToString());
+            return base.Build(sb.ToString());
         }
 
         private bool UseQuotas()

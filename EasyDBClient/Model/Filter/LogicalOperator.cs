@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EasyDBDriver.Model.Query
+namespace EasyDBDriver.Model
 {
 
     /// <summary>
     /// Render for example { $and: [ /expresion1/, /expresion 2/ ]}
     /// </summary>
-    public class LogicalOperator : AOperator
+    internal class LogicalOperator : AOperator
     {
         private readonly string _op;
         private readonly IEnumerable<IOperator> _expresions;
@@ -20,7 +20,7 @@ namespace EasyDBDriver.Model.Query
             _expresions = expresions;
         }
 
-        public override string Render(string s = null)
+        public override string Build(string s = null)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -30,7 +30,7 @@ namespace EasyDBDriver.Model.Query
             sb.Append(_op);
             sb.Append("\":");
             sb.Append("[");
-            sb.AppendJoin(",", _expresions.Select(e => e.Render()));
+            sb.AppendJoin(",", _expresions.Select(e => e.Build()));
             if (!string.IsNullOrEmpty(s))
             {
                 sb.Append(",");
@@ -40,7 +40,7 @@ namespace EasyDBDriver.Model.Query
             sb.Append("}");
 
 
-            return base.Render(sb.ToString());
+            return base.Build(sb.ToString());
         }
     }
 }
