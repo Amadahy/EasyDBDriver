@@ -35,7 +35,7 @@ namespace EasyDBDriver.Model
                 return string.Empty;
             }
 
-            return string.Join("&", parameters);
+            return string.Join("&", parameters.Select(e=> e.GetCriteria()));
         }
     }
 }

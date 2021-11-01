@@ -30,18 +30,31 @@ namespace EasyDBDriver.Model
             sb.Append("\"");
             sb.Append(_op);
             sb.Append("\":");
-            if (UseQuotas())
-            {
-                sb.Append("\"");
-            }
-            sb.Append(_val.ToString());
-            if (UseQuotas())
-            {
-                sb.Append("\"");
-            }
+            PrintValue(sb);
             sb.Append("}");
 
             return base.Build(sb.ToString());
+        }
+
+        private void PrintValue(StringBuilder sb)
+        {
+            if (_val is bool)
+            {
+                sb.Append(_val.ToString().ToLower());
+                return;
+            }
+
+            if (UseQuotas())
+            {
+                sb.Append("\"");
+            }
+
+            sb.Append(_val.ToString());
+
+            if (UseQuotas())
+            {
+                sb.Append("\"");
+            }
         }
 
         private bool UseQuotas()
