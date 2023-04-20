@@ -86,7 +86,7 @@ namespace EasyDBDriver
 
         public async Task<byte[]> GetFileAsync(string url)
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, $"{_urlToServer}/{url}");
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{url}");
 
             if (!string.IsNullOrEmpty(_token))
             {
@@ -97,7 +97,7 @@ namespace EasyDBDriver
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new InvalidOperationException($"HttpMethod.Get {_urlToServer}/{url} {response.ToString()}");
+                throw new InvalidOperationException($"HttpMethod.Get {url} {response.ToString()}");
             }
 
             return await response.Content.ReadAsByteArrayAsync();

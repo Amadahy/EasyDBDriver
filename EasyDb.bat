@@ -1,0 +1,1 @@
+npx easy-db-server -t LaskaJeLaska -p 36369
